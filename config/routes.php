@@ -19,7 +19,6 @@ Router::get('/favicon.ico', function () {
 });
 
 Router::addGroup('/users', function () {
-    Router::get('', [UserController::class, 'index']);
     Router::get('/{id}', [UserController::class, 'show']);
     Router::post('', [UserController::class, 'store']);
 });
