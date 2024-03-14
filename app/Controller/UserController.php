@@ -4,22 +4,25 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Repository\UserRepository;
+use App\Model\User;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use Ramsey\Uuid\Uuid;
 
 class UserController extends AbstractController
 {
     #[Inject]
-    protected UserRepository $userRepository;
+    protected User $user;
 
     public function show(string $id)
     {
-        return $this->userRepository->find($id);
+        return $this->user->findOrFail($id);
     }
 
     public function store(RequestInterface $request)
     {
-        return $this->userRepository->create($request->all());
+        $data = $request->all();
+        $data['id'] = Uuid::uuid4();
+        return $this->user->create($data);
     }
 }
