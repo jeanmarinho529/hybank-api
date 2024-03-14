@@ -23,6 +23,7 @@ class UserController extends AbstractController
     {
         $data = $request->validated();
         $data['id'] = Uuid::uuid4();
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         return $this->user->create($data);
     }
 }
